@@ -1,6 +1,5 @@
-#part1
 library(data.table)
-
+#part1
 temperatures_c  <- c(3, 6, 10, 14)
 scaling_weights <- c(1, 0.8, 1.2, 1)
 
