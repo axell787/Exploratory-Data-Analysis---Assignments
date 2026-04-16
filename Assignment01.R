@@ -16,6 +16,7 @@ print(weighted_results)
 
 ### PART 2 ###
 
+setwd("C:/Users/simca/Documents/czu/expDataAn/assignments")
 runoff_dt <- readRDS("data/dt_example.rds")
 
 #dt that estimates percentage change (Jan, Feb, March)

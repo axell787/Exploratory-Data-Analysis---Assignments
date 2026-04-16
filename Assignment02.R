@@ -2,6 +2,7 @@ library(data.table)
 library(reshape2)
 library(ggplot2)
 
+setwd("C:/Users/simca/Documents/czu/expDataAn/assignments")
 runoff_stations <- readRDS("data/runoff_stations.rds")
 
 ### PART 1 ###
