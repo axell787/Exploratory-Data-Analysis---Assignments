@@ -3,11 +3,11 @@ library(ggplot2)
 library(reshape2)
 setwd("C:/Users/simca/Documents/czu/expDataAn/assignments")
 
-runoff_stats <- readRDS("../data/runoff_stats.rds")
-runoff_day <- readRDS("../data/runoff_day.rds")
-runoff_monthly <- readRDS("../data/runoff_month.rds")
-runoff_stations <- readRDS("../data/runoff_stations.rds")
-runoff_summary <- readRDS("../data/runoff_summary.rds")
+runoff_stats <- readRDS("data/runoff_stats.rds")
+runoff_day <- readRDS("data/runoff_day.rds")
+runoff_monthly <- readRDS("data/runoff_month.rds")
+runoff_stations <- readRDS("data/runoff_stations.rds")
+runoff_summary <- readRDS("data/runoff_summary.rds")
 
 ### PART 1 ###
 
