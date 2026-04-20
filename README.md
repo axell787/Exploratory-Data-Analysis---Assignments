@@ -52,4 +52,36 @@ In this `README` file can be found all the `Explorer's questions` from the assig
 ## Assignment 02
 1. Area: square kilometers
    Runoff: cubim meters per second
-2.
+2. ```
+   runoff_stations <- readRDS('./data/runoff_stations.rds')
+    runoff_day      <- readRDS('./data/runoff_day.rds')
+
+    avg_area <- runoff_stations[, mean(area)]
+    cat("Average catchment area:", round(avg_area, 0), "km2\n")
+
+    avg_runoff <- runoff_day[, mean(value)]
+    cat("Average runoff:", round(avg_runoff, 1), "m3/s\n")
+    ```
+   `Average catchment area: 74490 km2` `Average runoff: 1372.8 m3/s`
+3. ```
+   runoff_day      <- readRDS('./data/runoff_day.rds')
+    runoff_stations <- readRDS('./data/runoff_stations.rds')
+
+    avg_runoff_station <- runoff_day[, .(mean_runoff = mean(value)), by = sname]
+
+    avg_runoff_station <- runoff_stations[avg_runoff_station, on = 'sname']
+
+    avg_runoff_station[, sname := reorder(sname, mean_runoff)]
+
+    ggplot(avg_runoff_station, aes(x = sname, y = mean_runoff)) +
+      geom_bar(stat = 'identity', fill = 'steelblue') +
+      coord_flip() +
+      labs(title = 'Average Daily Runoff per Station',
+       x = 'Station', y = 'Mean Runoff (m³/s)') +
+      theme_bw()
+    ```
+   <img width="1773" height="1285" alt="image" src="https://github.com/user-attachments/assets/6eabac3c-5f83-4d44-addb-dd668a48f304" />
+4. Yes, there is strong negative correlation
+   <img width="1401" height="971" alt="image" src="https://github.com/user-attachments/assets/855ad7c0-cc28-43c2-a1e1-1e12621c88ca" />
+
+
