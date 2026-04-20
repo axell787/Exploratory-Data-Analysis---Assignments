@@ -84,4 +84,69 @@ In this `README` file can be found all the `Explorer's questions` from the assig
 4. Yes, there is strong negative correlation
    <img width="1401" height="971" alt="image" src="https://github.com/user-attachments/assets/855ad7c0-cc28-43c2-a1e1-1e12621c88ca" />
 
+## Assignment 03
+1. No difference
+2. Because the runoff distribution is right skewed
+3. They are really close together, similar catchment areas and runoff. There is just border between them
+4. ```
+   colset_4 <- c("#D35C37", "#BF9A77", "#D6C6B9", "#97B8C2")
 
+    runoff_month  <- readRDS('./data/runoff_month.rds')
+    runoff_year   <- readRDS('./data/runoff_year.rds')
+    runoff_day    <- readRDS('./data/runoff_day.rds')
+    runoff_summer <- readRDS('./data/runoff_summer.rds')
+    runoff_winter <- readRDS('./data/runoff_winter.rds')
+    
+    # Highest/lowest MONTH
+    monthly_clim <- runoff_month[, .(mean_runoff = mean(value)), by = .(sname, month)]
+    peak_month   <- monthly_clim[, .SD[which.max(mean_runoff)], by = sname]
+    low_month    <- monthly_clim[, .SD[which.min(mean_runoff)], by = sname]
+    
+    # Highest/lowest YEAR
+    peak_year <- runoff_year[, .SD[which.max(value)], by = sname]
+    low_year  <- runoff_year[, .SD[which.min(value)], by = sname]
+    
+    # Highest/lowest SEASON
+    runoff_season <- runoff_day[!is.na(season), 
+                                .(value = mean(value)), 
+                                by = .(sname, season)]
+    peak_season <- runoff_season[, .SD[which.max(value)], by = sname]
+    low_season  <- runoff_season[, .SD[which.min(value)], by = sname]
+    
+    # Monthly runoff (heatmap style)
+    ggplot(monthly_clim, aes(x = factor(month), y = sname, fill = mean_runoff)) +
+      geom_tile(color = 'white') +
+      scale_fill_gradient(low = colset_4[3], high = colset_4[1],
+                          name = "Mean runoff\n(m³/s)") +
+      labs(title = "Mean Runoff by Month and Station",
+           x = "Month", y = "Station") +
+      theme_bw()
+    
+    # Year of peak and lowest runoff per station
+    peak_year[, type := 'Peak']    
+    low_year[,  type := 'Low']    
+    extremes_year <- rbind(peak_year, low_year)    
+    
+    ggplot(extremes_year, aes(x = year, y = sname, col = type, shape = type)) +
+      geom_point(size = 4) +
+      scale_color_manual(values = c('Peak' = colset_4[1], 'Low' = colset_4[4])) +
+      labs(title = "Year of Peak and Lowest Annual Runoff per Station",
+           x = "Year", y = "Station") +
+      theme_bw()
+
+    # Seasonal runoff per station
+    ggplot(runoff_season, aes(x = season, y = sname, fill = value)) +
+      geom_tile(color = 'white') +
+      scale_fill_gradient(low = colset_4[3], high = colset_4[1],
+                          name = "Mean runoff\n(m³/s)") +
+      labs(title = "Mean Runoff by Season and Station",
+           x = "Season", y = "Station") +
+      theme_bw()
+    ```
+   <img width="1393" height="904" alt="image" src="https://github.com/user-attachments/assets/eed27ab9-ca12-42b8-a183-ed78665406d6" />
+    <img width="1395" height="904" alt="image" src="https://github.com/user-attachments/assets/c8b7cde7-1009-4a46-8b65-5479b45494de" />
+    <img width="1389" height="903" alt="image" src="https://github.com/user-attachments/assets/4654d3cd-8a7d-4e84-8729-80a461539c11" />
+5. optional
+
+## Assignment 04
+1. No, DOMA is upstream
